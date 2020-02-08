@@ -1,7 +1,6 @@
-const dotenv = require('dotenv');
+require('dotenv').config();
 const express = require('express');
 
-dotenv.config();
 const app = express();
 
 //set up hot module replacement
