@@ -40,11 +40,6 @@ const config = {
       chunks: 'all',
     },
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      __isBrowser__: 'true',
-    }),
-  ],
   devtool: 'source-map',
 };
 
