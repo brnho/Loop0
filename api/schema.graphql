@@ -1,11 +1,9 @@
 type Event {
-	_id: ID!
-	id: Int!
-	name: String!
+	id: ID!
+	title: String!
 	description: String
 }
 
 type Query {
-	event(id: Int!): Event!
 	events: [Event!]!
 }

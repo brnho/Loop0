@@ -2,33 +2,11 @@ require('dotenv').config();
 const fs = require('fs');
 const { ApolloServer } = require('apollo-server-express');
 
-const events = [
-	{
-		_id: 'xhf',
-		id: 1,
-		name: 'Beach Party',
-		description: 'a fun time',
-	},
-	{
-		_id: 'idh',
-		id: 2,
-		name: 'Coffee Chat',
-		description: 'not a fun time',
-	},
-];
-
-function getEvent(_, { id }) {
-	return events.find((element) => element.id == id);
-}
-
-function getEvents() {
-	return events;
-}
+const event = require('./eventResolvers.js');
 
 const resolvers = {
 	Query: {
-		event: getEvent,
-		events: getEvents,
+		events: event.getEvents,
 	},
 };
 

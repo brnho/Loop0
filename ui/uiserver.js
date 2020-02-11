@@ -15,6 +15,13 @@ app.use(formData.parse())
 
 app.use(express.static('public'));
 
+app.get('/env.js', function(req, res) {
+	const env = {
+		UI_API_ENDPOINT: process.env.UI_API_ENDPOINT,
+	};
+	res.send(`window.ENV = ${JSON.stringify(env)}`);
+});
+
 app.post('/image-upload', (req, res) => {
 	const image = Object.values(req.files)[0];
 	cloudinary.uploader.upload(image.path, (result) => {
@@ -28,6 +35,6 @@ app.post('/image-upload', (req, res) => {
 });
 
 const port = process.env.UI_SERVER_PORT || 8000;
-app.listen(port, function() {
+app.listen(port, () => {
 	console.log(`UI started on port ${port}`);
 });

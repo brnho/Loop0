@@ -1,4 +1,5 @@
 import React from 'react';
+import Modal from 'react-bootstrap/Modal';
 
 import './EventForm.css';
 
@@ -13,10 +14,12 @@ export default class EventForm extends React.Component {
 			images: [],
 			selectedFile: null,
 			imagePreviewUrl: '',
+			modalVisible: false,
 		};
 		this.onInputChange = this.onInputChange.bind(this);
 		this.onImageChange = this.onImageChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
+		this.handleModalClick = this.handleModalClick.bind(this);
 	}
 
 	onInputChange(e) {
@@ -54,8 +57,12 @@ export default class EventForm extends React.Component {
 		reader.readAsDataURL(e.target.files[0]);
 	}
 
+	handleModalClick() {
+		this.setState((prevState) => ({ modalVisible: !prevState.modalVisible }));
+	}
+
 	render() {
-		const { name, location, description } = this.state;
+		const { name, location, description, modalVisible } = this.state;
 		let imagePreview;
 		if (this.state.imagePreviewUrl) {
 			imagePreview = <img src={this.state.imagePreviewUrl} />;
@@ -66,17 +73,25 @@ export default class EventForm extends React.Component {
 		const disabled = this.state.selectedFile ? false : true;
 		return(
 			<React.Fragment>
-				<form onSubmit={this.onSubmit}>
-					<label htmlFor="name">Name</label>
-					<input name="name" onChange={this.onInputChange} placeholder="Event Name" value={name} />
-					<br />
-					<label htmlFor="location">Location</label>
-					<input name="location" onChange={this.onInputChange} placeholder="Location" value={location} />
-					<br />
-					<input type="file" accept="image/png, image/jpeg, image/gif" onChange={this.onImageChange} />
-					{imagePreview}
-					<button type="submit" disabled={disabled}>Submit</button>
-				</form>
+				<button onClick={this.handleModalClick}>Launch modal</button>
+				<Modal show={modalVisible} onHide={this.handleModalClick}>
+					<Modal.Header closeButton>
+			         	<Modal.Title>Event Form</Modal.Title>
+			        </Modal.Header>
+			        <Modal.Body>
+						<form onSubmit={this.onSubmit}>
+							<label htmlFor="name">Name</label>
+							<input name="name" onChange={this.onInputChange} placeholder="Event Name" value={name} />
+							<br />
+							<label htmlFor="location">Location</label>
+							<input name="location" onChange={this.onInputChange} placeholder="Location" value={location} />
+							<br />
+							<input type="file" accept="image/png, image/jpeg, image/gif" onChange={this.onImageChange} />
+							{imagePreview}
+							<button type="submit" disabled={disabled}>Submit</button>
+						</form>
+					</Modal.Body>
+				</Modal>
 				{images}
 			</React.Fragment>
 		);

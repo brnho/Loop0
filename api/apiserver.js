@@ -1,20 +1,13 @@
 require('dotenv').config();
+require('./db.js');
 const express = require('express');
-const { connectToDb } = require('./db.js');
 const { installHandler } = require('./api_handler.js');
 
 const app = express();
 
-installHandler(app);
+installHandler(app); //install apollo server middleware
 
 const port = process.env.API_SERVER_PORT || 3000;
-(async function start() {
-	try {
-		await connectToDb();
-		app.listen(port, () => {
-			console.log(`API server started on port ${port}`);
-		});
-	} catch (err) {
-		console.log('ERROR:', err);
-	}
-}());
+app.listen(port, () => {
+	console.log(`API server started on port ${port}`);
+});
