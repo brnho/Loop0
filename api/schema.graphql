@@ -1,9 +1,24 @@
+scalar GraphQLDate
+
 type Event {
 	id: ID!
 	title: String!
 	description: String
+	imageURL: String
+	date: GraphQLDate
+}
+
+input EventInput {
+	title: String!
+	description: String
+	imageURL: String	
+	date: GraphQLDate
 }
 
 type Query {
 	events: [Event!]!
+}
+
+type Mutation {
+	eventAdd(event: EventInput!): Event!
 }

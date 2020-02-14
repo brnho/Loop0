@@ -3,3 +3,38 @@ img {
 	width: 20em;
 	height: 15em;
 }
+
+.col-form-label {
+	text-align: right;
+	direction: rtl;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.img-div {
+	height: 15em;
+	overflow: hidden;
+}
+
+.img-div > img {
+	object-fit: cover;
+	max-width: 100%;
+	min-width: 100%;
+}
+
+.img-div > button {
+	position: absolute;
+	top: .5em;
+	right: 1.5em;
+	border: none;
+	opacity: 0.6;
+}

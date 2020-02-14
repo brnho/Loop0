@@ -2,12 +2,17 @@ require('dotenv').config();
 const fs = require('fs');
 const { ApolloServer } = require('apollo-server-express');
 
+const GraphQLDate = require('./graphql_date.js');
 const event = require('./eventResolvers.js');
 
 const resolvers = {
 	Query: {
-		events: event.getEvents,
+		events: event.get,
 	},
+	Mutation: {
+		eventAdd: event.add,
+	},
+	GraphQLDate,
 };
 
 const server = new ApolloServer({

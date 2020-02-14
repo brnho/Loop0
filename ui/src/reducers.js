@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { FETCH_EVENTS_REQUEST, FETCH_EVENTS_SUCCESS } from './actions.js';
+import { FETCH_EVENTS_REQUEST, FETCH_EVENTS_SUCCESS, ADD_EVENT_SUCCESS } from './actions.js';
 
 const initialEventsState = {
 	isFetching: false,
@@ -9,6 +9,8 @@ const initialEventsState = {
 			id: null,
 			name: null,
 			description: null,
+			imageURL: null,
+			date: null,
 		},
 	],
 };
@@ -19,6 +21,8 @@ function eventsReducer(state = initialEventsState, action) {
 			return Object.assign({}, state, { isFetching: true });
 		case FETCH_EVENTS_SUCCESS:
 			return Object.assign({}, state, { isFetching: false, items: action.events });
+		case ADD_EVENT_SUCCESS:
+			return Object.assign({}, state, { items: [...state.items, action.event] });
 		default:
 			return state;
 	}

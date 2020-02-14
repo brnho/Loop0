@@ -1,0 +1,89 @@
+.card {
+	margin-top: 2em;
+	border: none;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.tile {
+	margin: 0;
+	background-color: white;
+	/*border: 2px solid #b3b3b3;
+	border-radius: 3px;*/
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.img {
+	height: 15em;
+	overflow: hidden;
+}
+
+.img > img {
+	object-fit: cover;
+	max-width: 100%;
+	min-width: 100%;
+}
+
+.tile-body {
+	padding: 0 1em 1em 1em;
+}
+
+.month {
+	display: block;
+	color: red;
+	font-size: 0.7em;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.day {
+	margin-top: 0;
+	display: block;
+	text-align: center;
+	font-size: 1.2em;
+	font-weight: 500;
+}
+
+.descr-main {
+	padding-left: 1.2em;
+}
+
+.descr-secondary {
+	padding-left: calc(1/0.7 * 1.2em);
+	font-size: 0.7em;
+	color: #b3b3b3;
+}
+
+.divider {
+	width: 100%;
+	height: .07em;
+	background-color: #b3b3b3;
+}
+
+.btn-group button {
+	margin-top: auto;
+	float: left; /*removes space between buttons*/
+	background-color: #F3F3F3;
+	border: 1px solid #E1E1E1;
+	padding: .2em .7em;
+	font-weight: bold;
+}
+
+.btn-group button:not(:last-child) {
+	border-right: none;
+}
+
+/*clearfix hack - add newline after floats*/
+.btn-group:after {
+	content: "";
+	clear: both;
+	display: table;
+}
+
+.subcontent {
+	font-size: .8rem;
+}
+
+i {
+	color: #b3b3b3;
+}
