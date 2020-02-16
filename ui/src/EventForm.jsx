@@ -10,13 +10,14 @@ import Button from 'react-bootstrap/Button';
 
 import './EventForm.css';
 import DateInput from './DateInput.jsx';
+import LocationInput from './LocationInput.jsx';
 
 export default class EventForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			title: '',
-			location: '',
+			position: { lat: 40.807784, lng: -73.962836 }, 
 			description: '',
 			date: new Date(),
 			invalidFields: {},
@@ -26,6 +27,7 @@ export default class EventForm extends React.Component {
 		};
 		this.onInputChange = this.onInputChange.bind(this);
 		this.onImageChange = this.onImageChange.bind(this);
+		this.onPositionChange = this.onPositionChange.bind(this);
 		this.onDateChange = this.onDateChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 		this.handleModalOpen = this.handleModalOpen.bind(this);
@@ -51,6 +53,8 @@ export default class EventForm extends React.Component {
 			title: this.state.title,
 			description: this.state.description,
 			date: this.state.date,
+			lat: this.state.position.lat,
+			lng: this.state.position.lng,
 		};
 		this.props.addEvent(partialEvent, formData);
 		this.setState({ modalVisible: false });
@@ -63,6 +67,10 @@ export default class EventForm extends React.Component {
 			this.setState({ imagePreviewUrl: reader.result });
 		};
 		reader.readAsDataURL(e.target.files[0]);
+	}
+
+	onPositionChange(position) {
+		this.setState({ position });
 	}
 
 	handleImageRemove() {
@@ -79,7 +87,7 @@ export default class EventForm extends React.Component {
 	handleModalHide() {
 		this.setState({
 			title: '',
-			location: '',
+			position: { lat: 40.807784, lng: -73.962836 },
 			description: '',
 			date: new Date(),
 			invalidFields: {},
@@ -92,7 +100,7 @@ export default class EventForm extends React.Component {
 	render() {
 		if (this.props.isFetching) return null;
 
-		const { title, location, description, date, modalVisible } = this.state;
+		const { title, position, description, date, modalVisible } = this.state;
 		let imagePreview;
 		let imageInput;
 		if (this.state.imagePreviewUrl) {
@@ -159,6 +167,16 @@ export default class EventForm extends React.Component {
 								<Col sm={9}>
 									{imageInput}
 									{imagePreview}
+								</Col>
+							</Form.Group>
+							<Form.Group as={Row}>
+								<Form.Label column sm={3}>Location</Form.Label>
+								<Col sm={9}>
+									<LocationInput 
+										position={position}
+										onPositionChange={this.onPositionChange}
+									/>	
+									<div>{position.lat} {position.lng}</div>						
 								</Col>
 							</Form.Group>
 							<Form.Group as={Row}>

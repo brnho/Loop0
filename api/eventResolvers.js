@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 const Event = mongoose.model('Event');
 
-async function get() {
+async function get(_, { search }) {
 	try {
-		const events = await Event.find({});
+		const filter = {};
+		if (search) filter.$text = { $search: search };
+		const events = await Event.find(filter);
 		return events;
 	} catch (e) {
 		throw e;

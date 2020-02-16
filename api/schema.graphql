@@ -6,6 +6,8 @@ type Event {
 	description: String
 	imageURL: String
 	date: GraphQLDate
+	lat: Float
+	lng: Float
 }
 
 input EventInput {
@@ -13,10 +15,12 @@ input EventInput {
 	description: String
 	imageURL: String	
 	date: GraphQLDate
+	lat: Float
+	lng: Float
 }
 
 type Query {
-	events: [Event!]!
+	events(search: String): [Event!]!
 }
 
 type Mutation {

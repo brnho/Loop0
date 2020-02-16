@@ -6,6 +6,10 @@ const eventSchema = new mongoose.Schema({
 	description: { type: String },
 	imageURL: { type: String },
 	date: { type: Date },
+	lat: { type: Number },
+	lng: { type: Number },
 });
+
+eventSchema.index({ title: 'text', description: 'text' });
 
 const Event = mongoose.model('Event', eventSchema);

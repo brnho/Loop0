@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Spinner from 'react-bootstrap/Spinner';
 
+import Event from './Event.jsx';
 import './EventList.css';
 
 export default class EventList extends React.Component {
@@ -22,22 +23,17 @@ export default class EventList extends React.Component {
 				</Spinner>
 			);
 		}
-		const items = this.props.events.map((event, i) => {
-			const image = event.imageURL ? <img key={i*3} src={event.imageURL} /> : <img key={i*3} src="Bridge.jpg" />;
-			const date = new Date(event.date);
-			return (
-				<Card key={i*3+1}>
-					<div className='img'>
-						{image}
-					</div>
-					<Card.Body>
-				    	<Card.Title>{event.title}</Card.Title>
-				    	<Card.Text>{event.description}</Card.Text>
-				    	<Card.Text>{date.toDateString()}</Card.Text>
-				  	</Card.Body>
-				</Card>
-			);
-		});
+		const items = this.props.events.map((event, i) => 
+			<Event 
+				key={i}
+				title={event.title}
+				description={event.description}
+				imageURL={event.imageURL}
+				lat={event.lat}
+				lng={event.lng}
+				date={event.date}
+			/>
+		);
 		return (
 			<div>
 				{items}
@@ -91,6 +87,8 @@ EventList.propTypes = {
 			title: PropTypes.string,
 			description: PropTypes.string,
 			imageURL: PropTypes.string,
+			lat: PropTypes.number,
+			lng: PropTypes.number,
 		})
 	),	
 	getEvents: PropTypes.func,

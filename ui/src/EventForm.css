@@ -1,9 +1,3 @@
-img {
-	object-fit: cover;
-	width: 20em;
-	height: 15em;
-}
-
 .col-form-label {
 	text-align: right;
 	direction: rtl;

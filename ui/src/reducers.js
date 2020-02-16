@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux';
-
-import { FETCH_EVENTS_REQUEST, FETCH_EVENTS_SUCCESS, ADD_EVENT_SUCCESS } from './actions.js';
+import { 
+	FETCH_EVENTS_REQUEST, 
+	FETCH_EVENTS_SUCCESS, 
+	ADD_EVENT_SUCCESS,
+	ON_USER_CHANGE, 
+} from './actions.js';
 
 const initialEventsState = {
 	isFetching: false,
@@ -11,8 +15,15 @@ const initialEventsState = {
 			description: null,
 			imageURL: null,
 			date: null,
+			lat: null,
+			lng: null,
 		},
 	],
+};
+
+const initialUserState = {
+	signedIn: false,
+	givenName: null,
 };
 
 function eventsReducer(state = initialEventsState, action) { 
@@ -28,8 +39,18 @@ function eventsReducer(state = initialEventsState, action) {
 	}
 }
 
+function userReducer(state = initialUserState, action) {
+	switch (action.type) {
+		case ON_USER_CHANGE:
+			return { signedIn: action.signedIn, givenName: action.givenName };
+		default:
+			return state;
+	}
+}
+
 const reducer = combineReducers({ 
 	events: eventsReducer, //eventsReducer is passed states.events
+	user: userReducer,
 });
 
 export default reducer;

@@ -13,7 +13,6 @@ const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 
 const element = (
 	<Provider store={store}>
-		<h1>Hello World</h1>
 		<Page />
 	</Provider>
 );

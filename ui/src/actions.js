@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-fetch';
 
+import graphQlFetch from './graphQlFetch.js';
+
 export const FETCH_EVENTS_REQUEST = 'FETCH_EVENTS_REQUEST';
 export function fetchEventsRequest() {
   return { type: FETCH_EVENTS_REQUEST };
@@ -15,12 +17,17 @@ export function addEventSuccess(event) {
   return { type: ADD_EVENT_SUCCESS, event };
 }
 
+export const ON_USER_CHANGE = 'ON_USER_CHANGE';
+export function onUserChange({ signedIn, givenName }) {
+	return { type: ON_USER_CHANGE, signedIn, givenName };
+}
+
 export function fetchEvents() { //cannot be an async function...
 	return async function(dispatch) { //using redux-thunk
 		dispatch(fetchEventsRequest());
 		const query = `query {
 			events {
-				id title description imageURL date
+				id title description imageURL date lat lng
 			}
 		}`; 
 		const result = await graphQlFetch(query);
@@ -55,26 +62,5 @@ async function imageUpload(formData) {
 	} catch (e) {
 		console.log(`Error in sending data to server: ${e.message}`);
 		return null;
-	}
-}
-
-async function graphQlFetch(query, variables = {}) {
-	const apiEndpoint = window.ENV.UI_API_GRAPHQL_ENDPOINT;
-	try {
-		const response = await fetch(apiEndpoint, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ query, variables })
-		});
-		const body = await response.text();
-		const result = JSON.parse(body);
-
-		if (result.errors) { //error returned by graphql
-			console.log(`${error.extensions.code}: ${error.message}`)
-		}
-		return result.data;
-	} catch (e) {
-		console.log(`Error in sending data to server: ${e.message}`); //error with fetching
-    	return null;
 	}
 }

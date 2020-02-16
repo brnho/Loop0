@@ -1,18 +1,20 @@
 require('dotenv').config();
 require('./db.js');
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const formData = require("express-form-data");
 const cloudinary = require('cloudinary');
 const cors = require('cors');
 
 const { installHandler } = require('./api_handler.js');
+const auth = require('./auth.js');
 
 const app = express();
 
 app.use(formData.parse()); //middleware for parsing form data (ex images)
+app.use(cookieParser());
 
 const origin = process.env.UI_SERVER_ORIGIN || 'http://localhost:8000';
-app.use(cors({ origin }));
 
 cloudinary.config({ 
   cloud_name: process.env.CLOUD_NAME, 
@@ -20,9 +22,11 @@ cloudinary.config({
   api_secret: process.env.API_SECRET
 })
 
+app.use('/auth', auth.routes);
+
 installHandler(app); //install apollo server middleware
 
-app.post('/image-upload', (req, res) => {
+app.post('/image-upload', cors({ origin }), (req, res) => {
 	const image = Object.values(req.files)[0];
 	cloudinary.uploader.upload(image.path, (result) => {
 		res.json(result);
